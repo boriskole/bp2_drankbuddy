@@ -6,7 +6,7 @@
 
     <groupId>nl.ad-academie</groupId>
     <artifactId>DrankBuddy</artifactId>
-    <version>1.0-SNAPSHOT</version>
+    <version>1.0.0</version>
     <name>DrankBuddy</name>
 
     <properties>
@@ -60,7 +60,7 @@
                         <!-- Default configuration for running with: mvn clean javafx:run -->
                         <id>default-cli</id>
                         <configuration>
-                            <mainClass>nl.adacademie.drankbuddy/nl.adacademie.drankbuddy.HelloApplication</mainClass>
+                            <mainClass>nl.adacademie.drankbuddy/nl.adacademie.drankbuddy.DrankBuddy</mainClass>
                             <launcher>app</launcher>
                             <jlinkZipName>app</jlinkZipName>
                             <jlinkImageName>app</jlinkImageName>
