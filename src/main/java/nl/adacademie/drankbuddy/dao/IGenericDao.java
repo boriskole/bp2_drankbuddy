@@ -5,7 +5,7 @@ import java.util.Optional;
 
 /**
  * Een basisinterface voor alle DAO's
- *
+ * <p>
  * @param <T> De entiteit die door deze DAO wordt beheerd/gebruikt.
  */
 public interface IGenericDao<T> {
