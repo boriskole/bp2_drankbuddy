@@ -1,0 +1,85 @@
+/* Basic page styling: */
+.root {
+    -fx-background-color: #efefef;
+    -fx-font-family: "Geist", sans-serif;
+}
+
+.login-pane {
+    -fx-background-color: #fff;
+    -fx-background-radius: 10;
+    -fx-border-color: rgba(0, 0, 0, 0.2);
+    -fx-border-radius: 10;
+}
+
+/* Heading styling: */
+.logo-pane {
+    -fx-background-color: #1069ba;
+    -fx-max-width: 55;
+    -fx-max-height: 55;
+    -fx-background-radius: 10;
+}
+
+.heading-title {
+    -fx-font-size: 24;
+    -fx-font-weight: bold;
+}
+
+.heading-subtitle {
+    -fx-font-size: 14;
+    -fx-opacity: 0.7;
+}
+
+/* Form styling: */
+.login-form .label {
+    -fx-font-size: 14;
+}
+
+.login-form .text-field, .login-form .password-field {
+    -fx-font-size: 14;
+    -fx-prompt-text-fill: rgba(0, 0, 0, 0.4);
+    -fx-border-color: rgba(0, 0, 0, 0.2);
+    -fx-border-radius: 5;
+    -fx-background-radius: 5;
+    -fx-padding: 10;
+}
+
+.login-form .button {
+    -fx-font-size: 14;
+    -fx-background-color: #1069ba;
+    -fx-text-fill: #fff;
+    -fx-padding: 10;
+    -fx-background-radius: 5;
+}
+
+.login-form .button:hover {
+    -fx-background-color: #0d599e;
+    -fx-cursor: hand;
+}
+
+/* Footer styling: */
+.register-first-part, .register-second-part {
+    -fx-font-size: 15;
+    -fx-text-fill: #474747;
+}
+
+.register-second-part {
+    -fx-text-fill: #1069ba;
+}
+
+.register-second-part:hover {
+    -fx-cursor: hand;
+    -fx-underline: true;
+}
+
+/* Error styling: */
+.error-box {
+    -fx-background-color: #f8d7da;
+    -fx-border-color: #f5c6cb;
+    -fx-border-radius: 5px;
+    -fx-background-radius: 5px;
+}
+
+.error-text {
+    -fx-text-fill: #721c24;
+    -fx-font-size: 14px;
+}
