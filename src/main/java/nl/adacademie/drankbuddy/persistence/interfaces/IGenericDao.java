@@ -1,4 +1,4 @@
-package nl.adacademie.drankbuddy.dao;
+package nl.adacademie.drankbuddy.persistence.interfaces;
 
 import java.util.List;
 import java.util.Optional;
