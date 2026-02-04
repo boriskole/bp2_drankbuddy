@@ -7,6 +7,7 @@ import java.sql.Connection;
 import java.sql.PreparedStatement;
 import java.sql.ResultSet;
 import java.sql.SQLException;
+import java.sql.Statement;
 import java.util.List;
 import java.util.Optional;
 
@@ -43,8 +44,8 @@ public class AccountDao {
 
     public Account save(Account entity) {
         try {
-            // Query aanmaken.
-            PreparedStatement statement = connection.prepareStatement("INSERT INTO account (username, password, name) VALUES (?, ?, ?)");
+            // Query maken.
+            PreparedStatement statement = connection.prepareStatement("INSERT INTO account (username, password, name) VALUES (?, ?, ?)", Statement.RETURN_GENERATED_KEYS);
 
             // Query parameters instellen.
             statement.setString(1, entity.getUsername());
@@ -52,15 +53,17 @@ public class AccountDao {
             statement.setString(3, entity.getName());
 
             // Query uitvoeren.
-            statement.execute();
+            statement.executeUpdate();
 
-            // Het toegewezen id van de nieuwe account ophalen.
+            // Haal de keys op
             ResultSet generatedKeys = statement.getGeneratedKeys();
-            entity.setId(generatedKeys.getInt(1));
+            if (generatedKeys.next()) {
+                entity.setId(generatedKeys.getInt(1));
+            }
 
             return entity;
         } catch (SQLException exception) {
-            throw new IllegalStateException("Er ging iets mis tijdens een database operatie.", exception);
+            throw new RuntimeException("Fout bij opslaan account: " + exception.getMessage(), exception);
         }
     }
 

@@ -1,4 +1,4 @@
-package nl.adacademie.drankbuddy.view;
+package nl.adacademie.drankbuddy.view.security;
 
 import javafx.geometry.Insets;
 import javafx.geometry.Pos;
@@ -9,9 +9,12 @@ import javafx.scene.control.TextField;
 import javafx.scene.image.ImageView;
 import javafx.scene.layout.BorderPane;
 import javafx.scene.layout.HBox;
+import javafx.scene.layout.Region;
 import javafx.scene.layout.StackPane;
 import javafx.scene.layout.VBox;
 import nl.adacademie.drankbuddy.DrankBuddy;
+import nl.adacademie.drankbuddy.controller.RegisterAccountController;
+import nl.adacademie.drankbuddy.dto.RegisterRequestDto;
 import nl.adacademie.drankbuddy.view.status.LoginPageStatus;
 import nl.adacademie.drankbuddy.view.status.RegisterPageStatus;
 
@@ -29,7 +32,7 @@ public class RegisterPageView extends BorderPane {
         root.getChildren().add(createHeading());
 
         if (registerPageStatus != RegisterPageStatus.NONE) { // Alleen laten zien als er iets anders dan NONE is weggegeven.
-            root.getChildren().add(createError(registerPageStatus));
+            root.getChildren().add(createErrorMessage(registerPageStatus));
         }
 
         root.getChildren().add(createRegisterForm());
@@ -74,7 +77,7 @@ public class RegisterPageView extends BorderPane {
         return root;
     }
 
-    private HBox createError(RegisterPageStatus registerPageStatus) {
+    private HBox createErrorMessage(RegisterPageStatus registerPageStatus) {
         HBox errorBox = new HBox(10); // Root node maken.
         errorBox.getStyleClass().add("error-box"); // CSS-class toevoegen.
         errorBox.setAlignment(Pos.CENTER_LEFT); // Links-midden positioneren.
@@ -97,6 +100,7 @@ public class RegisterPageView extends BorderPane {
         // Label maken.
         Label errorLabel = new Label(message);
         errorLabel.setWrapText(true);
+        errorLabel.setMinHeight(Region.USE_PREF_SIZE);
         errorLabel.getStyleClass().add("error-text");
 
         // Alle onderdelen toevoegen aan de root node.
@@ -108,6 +112,12 @@ public class RegisterPageView extends BorderPane {
         // Root node maken.
         VBox root = new VBox(20);
         root.getStyleClass().add("register-form");
+
+        VBox nameBox = new VBox(5); // Box maken voor de naam.
+        Label nameLabel = new Label("Naam");
+        TextField nameField = new TextField();
+        nameField.setPromptText("Kies een naam..."); // De prompt tekst instellen
+        nameBox.getChildren().addAll(nameLabel, nameField); // Alle gebruikersnaam onderdelen toevoegen.
 
         VBox usernameBox = new VBox(5); // Box maken voor de gebruikersnaam.
         Label usernameLabel = new Label("Gebruikersnaam");
@@ -129,9 +139,19 @@ public class RegisterPageView extends BorderPane {
 
         Button registerButton = new Button("Registreren"); // Submit knop maken.
         registerButton.setMaxWidth(Double.MAX_VALUE); // De breedte van de knop vergroten.
+        registerButton.setOnMouseClicked(_ -> {
+            RegisterAccountController registerAccountController = new RegisterAccountController();
+            registerAccountController.registerAccount(new RegisterRequestDto(
+                nameField.getText(),
+                usernameField.getText(),
+                passwordField.getText(),
+                passwordConfirmField.getText()
+            ));
+        });
 
         // De onderdelen toevoegen aan de root node.
         root.getChildren().addAll(
+            nameBox,
             usernameBox,
             passwordBox,
             passwordConfirmBox,

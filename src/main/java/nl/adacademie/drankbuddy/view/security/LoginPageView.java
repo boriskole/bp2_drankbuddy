@@ -1,4 +1,4 @@
-package nl.adacademie.drankbuddy.view;
+package nl.adacademie.drankbuddy.view.security;
 
 import javafx.geometry.Insets;
 import javafx.geometry.Pos;
@@ -9,11 +9,16 @@ import javafx.scene.control.TextField;
 import javafx.scene.image.ImageView;
 import javafx.scene.layout.BorderPane;
 import javafx.scene.layout.HBox;
+import javafx.scene.layout.Priority;
 import javafx.scene.layout.StackPane;
 import javafx.scene.layout.VBox;
 import nl.adacademie.drankbuddy.DrankBuddy;
+import nl.adacademie.drankbuddy.controller.LoginController;
+import nl.adacademie.drankbuddy.dto.LoginRequestDto;
 import nl.adacademie.drankbuddy.view.status.LoginPageStatus;
 import nl.adacademie.drankbuddy.view.status.RegisterPageStatus;
+
+import java.util.Locale;
 
 public class LoginPageView extends BorderPane {
 
@@ -28,7 +33,9 @@ public class LoginPageView extends BorderPane {
         // Losse components toevoegen.
         root.getChildren().add(createHeading());
 
-        if (loginPageStatus != LoginPageStatus.NONE) { // Alleen laten zien als er iets anders dan NONE is weggegeven.
+        if (loginPageStatus == LoginPageStatus.REGISTER_SUCCESS) {
+            root.getChildren().add(createSuccessMessage());
+        } else if (loginPageStatus != LoginPageStatus.NONE) { // Alleen laten zien als er iets anders dan NONE is weggegeven.
             root.getChildren().add(createError(loginPageStatus));
         }
 
@@ -40,6 +47,31 @@ public class LoginPageView extends BorderPane {
 
         // De root node toevoegen aan de pane.
         setCenter(root);
+    }
+
+    private HBox createSuccessMessage() {
+        HBox successBox = new HBox(10);
+        successBox.getStyleClass().add("success-box"); // Gebruik een success-class voor groene styling
+        successBox.setAlignment(Pos.CENTER_LEFT);
+        successBox.setPadding(new Insets(10));
+
+        // Icon maken
+        ImageView successIcon = new ImageView(getClass().getResource("/media/circle_check.png").toExternalForm());
+        successIcon.setFitWidth(25);
+        successIcon.setPreserveRatio(true);
+        successIcon.setSmooth(true);
+
+        // Label maken
+        Label successLabel = new Label("Registratie geslaagd! Je kunt nu inloggen.");
+        successLabel.getStyleClass().add("success-text");
+
+        // Zorg dat de tekst netjes wrapt
+        successLabel.setWrapText(true);
+        successLabel.setMinWidth(0);
+        HBox.setHgrow(successLabel, Priority.ALWAYS);
+
+        successBox.getChildren().addAll(successIcon, successLabel);
+        return successBox;
     }
 
     private VBox createHeading() {
@@ -121,6 +153,14 @@ public class LoginPageView extends BorderPane {
 
         Button loginButton = new Button("Inloggen"); // Submit knop maken.
         loginButton.setMaxWidth(Double.MAX_VALUE); // De breedte van de knop vergroten.
+
+        loginButton.setOnMouseClicked(_ -> {
+            LoginController loginController = new LoginController();
+            loginController.login(new LoginRequestDto(
+                usernameField.getText(),
+                passwordField.getText()
+            ));
+        });
 
         // De onderdelen toevoegen aan de root node.
         root.getChildren().addAll(
