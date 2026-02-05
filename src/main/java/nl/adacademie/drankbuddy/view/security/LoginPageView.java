@@ -15,10 +15,10 @@ import javafx.scene.layout.VBox;
 import nl.adacademie.drankbuddy.DrankBuddy;
 import nl.adacademie.drankbuddy.controller.LoginController;
 import nl.adacademie.drankbuddy.dto.LoginRequestDto;
+import nl.adacademie.drankbuddy.repository.dao.AccountDaoImpl;
+import nl.adacademie.drankbuddy.view.dashboard.ProductOverviewView;
 import nl.adacademie.drankbuddy.view.status.LoginPageStatus;
 import nl.adacademie.drankbuddy.view.status.RegisterPageStatus;
-
-import java.util.Locale;
 
 public class LoginPageView extends BorderPane {
 
@@ -155,11 +155,17 @@ public class LoginPageView extends BorderPane {
         loginButton.setMaxWidth(Double.MAX_VALUE); // De breedte van de knop vergroten.
 
         loginButton.setOnMouseClicked(_ -> {
-            LoginController loginController = new LoginController();
-            loginController.login(new LoginRequestDto(
+            LoginController loginController = new LoginController(new AccountDaoImpl());
+            LoginPageStatus loginPageStatus = loginController.login(new LoginRequestDto(
                 usernameField.getText(),
                 passwordField.getText()
             ));
+
+            switch (loginPageStatus) {
+                case EMPTY_FIELDS -> DrankBuddy.changeView(new LoginPageView(LoginPageStatus.EMPTY_FIELDS));
+                case INVALID_CREDENTIALS -> DrankBuddy.changeView(new LoginPageView(LoginPageStatus.INVALID_CREDENTIALS));
+                case LOGIN_SUCCESS -> DrankBuddy.changeView(new ProductOverviewView());
+            }
         });
 
         // De onderdelen toevoegen aan de root node.

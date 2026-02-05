@@ -15,6 +15,7 @@ import javafx.scene.layout.VBox;
 import nl.adacademie.drankbuddy.DrankBuddy;
 import nl.adacademie.drankbuddy.controller.RegisterAccountController;
 import nl.adacademie.drankbuddy.dto.RegisterRequestDto;
+import nl.adacademie.drankbuddy.repository.dao.AccountDaoImpl;
 import nl.adacademie.drankbuddy.view.status.LoginPageStatus;
 import nl.adacademie.drankbuddy.view.status.RegisterPageStatus;
 
@@ -140,7 +141,7 @@ public class RegisterPageView extends BorderPane {
         Button registerButton = new Button("Registreren"); // Submit knop maken.
         registerButton.setMaxWidth(Double.MAX_VALUE); // De breedte van de knop vergroten.
         registerButton.setOnMouseClicked(_ -> {
-            RegisterAccountController registerAccountController = new RegisterAccountController();
+            RegisterAccountController registerAccountController = new RegisterAccountController(new AccountDaoImpl());
             registerAccountController.registerAccount(new RegisterRequestDto(
                 nameField.getText(),
                 usernameField.getText(),

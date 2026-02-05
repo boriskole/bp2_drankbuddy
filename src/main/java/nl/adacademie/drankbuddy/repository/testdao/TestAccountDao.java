@@ -26,8 +26,8 @@ public class TestAccountDao implements AccountDaoInterface {
         ENTITIES.addAll(accounts);
     }
 
-    public static void clearAll(List<Account> accounts) {
-        ENTITIES.removeAll(accounts);
+    public static void clearAll() {
+        ENTITIES.clear();
     }
 
 }

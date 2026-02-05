@@ -13,5 +13,6 @@ public enum LoginPageStatus {
     NONE, // Geen fout
     EMPTY_FIELDS, // 1 of meerdere velden zijn leeg
     INVALID_CREDENTIALS, // Ongeldige gebruikersnaam of wachtwoord
-    REGISTER_SUCCESS // Registratie gelukt
+    REGISTER_SUCCESS, // Registratie gelukt
+    LOGIN_SUCCESS // Inlog gelukt
 }
