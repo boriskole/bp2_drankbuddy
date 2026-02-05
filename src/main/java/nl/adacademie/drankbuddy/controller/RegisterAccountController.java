@@ -2,8 +2,8 @@ package nl.adacademie.drankbuddy.controller;
 
 import nl.adacademie.drankbuddy.DrankBuddy;
 import nl.adacademie.drankbuddy.dto.RegisterRequestDto;
-import nl.adacademie.drankbuddy.dao.AccountDao;
 import nl.adacademie.drankbuddy.entity.Account;
+import nl.adacademie.drankbuddy.repository.interfaces.AccountDaoInterface;
 import nl.adacademie.drankbuddy.view.security.LoginPageView;
 import nl.adacademie.drankbuddy.view.security.RegisterPageView;
 import nl.adacademie.drankbuddy.view.status.LoginPageStatus;
@@ -13,10 +13,10 @@ import java.util.stream.Stream;
 
 public class RegisterAccountController {
 
-    private final AccountDao accountDao;
+    private final AccountDaoInterface accountDao;
 
-    public RegisterAccountController() {
-        this.accountDao = new AccountDao();
+    public RegisterAccountController(AccountDaoInterface accountDao) {
+        this.accountDao = accountDao;
     }
 
     public void registerAccount(RegisterRequestDto registerRequestDto) {

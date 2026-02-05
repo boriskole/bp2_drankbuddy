@@ -1,6 +1,7 @@
-package nl.adacademie.drankbuddy.dao;
+package nl.adacademie.drankbuddy.repository.dao;
 
 import nl.adacademie.drankbuddy.entity.Account;
+import nl.adacademie.drankbuddy.repository.interfaces.AccountDaoInterface;
 import nl.adacademie.drankbuddy.service.DatabaseConnectionProvider;
 
 import java.sql.Connection;
@@ -8,17 +9,17 @@ import java.sql.PreparedStatement;
 import java.sql.ResultSet;
 import java.sql.SQLException;
 import java.sql.Statement;
-import java.util.List;
 import java.util.Optional;
 
-public class AccountDao {
+public class AccountDaoImpl implements AccountDaoInterface {
 
     private final Connection connection;
 
-    public AccountDao() {
+    public AccountDaoImpl() {
         this.connection = DatabaseConnectionProvider.getConnection();
     }
 
+    @Override
     public Optional<Account> findByUsername(String username) {
         try {
             // Query aanmaken.
@@ -42,6 +43,7 @@ public class AccountDao {
         }
     }
 
+    @Override
     public Account save(Account entity) {
         try {
             // Query maken.
