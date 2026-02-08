@@ -142,12 +142,19 @@ public class RegisterPageView extends BorderPane {
         registerButton.setMaxWidth(Double.MAX_VALUE); // De breedte van de knop vergroten.
         registerButton.setOnMouseClicked(_ -> {
             RegisterAccountController registerAccountController = new RegisterAccountController(new AccountDaoImpl());
-            registerAccountController.registerAccount(new RegisterRequestDto(
+            RegisterPageStatus registerPageStatus = registerAccountController.registerAccount(new RegisterRequestDto(
                 nameField.getText(),
                 usernameField.getText(),
                 passwordField.getText(),
                 passwordConfirmField.getText()
             ));
+
+            switch (registerPageStatus) {
+                case EMPTY_FIELDS -> DrankBuddy.changeView(new RegisterPageView(RegisterPageStatus.EMPTY_FIELDS));
+                case USERNAME_EXISTS -> DrankBuddy.changeView(new RegisterPageView(RegisterPageStatus.USERNAME_EXISTS));
+                case PASSWORD_MISMATCH -> DrankBuddy.changeView(new RegisterPageView(RegisterPageStatus.PASSWORD_MISMATCH));
+                case REGISTER_SUCCESS -> DrankBuddy.changeView(new LoginPageView(LoginPageStatus.REGISTER_SUCCESS));
+            }
         });
 
         // De onderdelen toevoegen aan de root node.

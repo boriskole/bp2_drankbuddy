@@ -14,4 +14,5 @@ public enum RegisterPageStatus {
     EMPTY_FIELDS, // 1 of meerdere velden zijn leeg
     USERNAME_EXISTS, // Gebruikersnaam bestaat al
     PASSWORD_MISMATCH, // Wachtwoorden komen niet overeen
+    REGISTER_SUCCESS, // Registratie gelukt
 }

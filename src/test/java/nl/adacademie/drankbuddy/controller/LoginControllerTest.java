@@ -4,6 +4,7 @@ import nl.adacademie.drankbuddy.dto.LoginRequestDto;
 import nl.adacademie.drankbuddy.entity.Account;
 import nl.adacademie.drankbuddy.repository.testdao.TestAccountDao;
 import nl.adacademie.drankbuddy.view.status.LoginPageStatus;
+import org.junit.jupiter.api.AfterEach;
 import org.junit.jupiter.api.Test;
 
 import java.util.List;
@@ -11,6 +12,11 @@ import java.util.List;
 import static org.junit.jupiter.api.Assertions.assertEquals;
 
 class LoginControllerTest {
+
+    @AfterEach
+    void tearDown() {
+        TestAccountDao.clearAll();
+    }
 
     @Test
     void it_returns_empty_fields_when_the_dto_has_empty_or_null_fields() {
