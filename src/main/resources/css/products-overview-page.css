@@ -1,0 +1,35 @@
+/* Sidebar: */
+.sidebar {
+    -fx-background-color: #e8f4ff;
+    -fx-border-color: #D3D8DE;
+    -fx-border-width: 0 1 0 0; /* Alleen de rechter kant */
+}
+
+/* Header section: */
+.header-section {
+    -fx-background-color: #e8f4ff;
+}
+
+/* Logout section: */
+.logout-section {
+    -fx-border-color: #D3D8DE;
+    -fx-border-width: 1 0 0 0; /* Alleen de bovenste kant */
+}
+
+.logout-section .label {
+    -fx-font-size: 15;
+}
+
+.logout-section .image-view {
+    -fx-opacity: .6;
+}
+
+.logout-button {
+    -fx-cursor: hand;
+    -fx-padding: 10;
+    -fx-background-radius: 5;
+}
+
+.logout-button:hover {
+    -fx-background-color: #ceeaff;
+}
