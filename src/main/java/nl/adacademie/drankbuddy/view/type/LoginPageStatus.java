@@ -1,4 +1,4 @@
-package nl.adacademie.drankbuddy.view.status;
+package nl.adacademie.drankbuddy.view.type;
 
 import nl.adacademie.drankbuddy.view.security.LoginPageView;
 

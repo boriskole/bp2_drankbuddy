@@ -17,8 +17,8 @@ import nl.adacademie.drankbuddy.controller.LoginController;
 import nl.adacademie.drankbuddy.dto.LoginRequestDto;
 import nl.adacademie.drankbuddy.repository.dao.AccountDaoImpl;
 import nl.adacademie.drankbuddy.view.dashboard.ProductOverviewView;
-import nl.adacademie.drankbuddy.view.status.LoginPageStatus;
-import nl.adacademie.drankbuddy.view.status.RegisterPageStatus;
+import nl.adacademie.drankbuddy.view.type.LoginPageStatus;
+import nl.adacademie.drankbuddy.view.type.RegisterPageStatus;
 
 public class LoginPageView extends BorderPane {
 

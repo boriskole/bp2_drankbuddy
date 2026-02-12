@@ -3,7 +3,7 @@ package nl.adacademie.drankbuddy.controller;
 import nl.adacademie.drankbuddy.dto.LoginRequestDto;
 import nl.adacademie.drankbuddy.entity.Account;
 import nl.adacademie.drankbuddy.repository.testdao.TestAccountDao;
-import nl.adacademie.drankbuddy.view.status.LoginPageStatus;
+import nl.adacademie.drankbuddy.view.type.LoginPageStatus;
 import org.junit.jupiter.api.AfterEach;
 import org.junit.jupiter.api.Test;
 

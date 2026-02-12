@@ -3,7 +3,7 @@ package nl.adacademie.drankbuddy.controller;
 import nl.adacademie.drankbuddy.dto.RegisterRequestDto;
 import nl.adacademie.drankbuddy.entity.Account;
 import nl.adacademie.drankbuddy.repository.interfaces.AccountDaoInterface;
-import nl.adacademie.drankbuddy.view.status.RegisterPageStatus;
+import nl.adacademie.drankbuddy.view.type.RegisterPageStatus;
 
 import java.util.stream.Stream;
 

@@ -4,7 +4,7 @@ import nl.adacademie.drankbuddy.DrankBuddy;
 import nl.adacademie.drankbuddy.dto.LoginRequestDto;
 import nl.adacademie.drankbuddy.entity.Account;
 import nl.adacademie.drankbuddy.repository.interfaces.AccountDaoInterface;
-import nl.adacademie.drankbuddy.view.status.LoginPageStatus;
+import nl.adacademie.drankbuddy.view.type.LoginPageStatus;
 
 import java.util.Optional;
 import java.util.stream.Stream;
