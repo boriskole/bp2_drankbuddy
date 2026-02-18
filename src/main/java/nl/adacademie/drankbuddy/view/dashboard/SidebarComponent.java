@@ -18,12 +18,12 @@ import nl.adacademie.drankbuddy.view.type.MenuPage;
 /**
  * Een losse component om de sidebar te maken.
  */
-public class DashboardComponent extends VBox {
+public class SidebarComponent extends VBox {
 
     /**
      * @param activePage De pagina die momenteel actief is.
      */
-    public DashboardComponent(MenuPage activePage) {
+    public SidebarComponent(MenuPage activePage) {
         // Stylesheets laden
         getStylesheets().add("https://fonts.googleapis.com/css2?family=Geist:wght@100..900&display=swap");
         getStylesheets().add(getClass().getResource("/css/sidebar.css").toExternalForm());

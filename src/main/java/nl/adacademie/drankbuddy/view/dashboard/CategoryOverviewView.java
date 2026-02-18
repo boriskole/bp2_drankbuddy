@@ -7,7 +7,7 @@ import nl.adacademie.drankbuddy.view.type.MenuPage;
 public class CategoryOverviewView extends BorderPane {
 
     public CategoryOverviewView() {
-        setLeft(new DashboardComponent(MenuPage.CATEGORIES));
+        setLeft(new SidebarComponent(MenuPage.CATEGORIES));
         setCenter(new Label("Category overview page"));
     }
 
