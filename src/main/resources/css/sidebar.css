@@ -59,7 +59,7 @@
 }
 
 .logout-section .image-view {
-    -fx-opacity: .6;
+    -fx-opacity: .8;
 }
 
 .logout-button {
@@ -68,6 +68,11 @@
     -fx-background-radius: 5;
 }
 
-.logout-button:hover {
-    -fx-background-color: #e7f1fb;
+.logout-button:hover, .logout-button:hover .label, .logout-button:hover .image-view {
+    -fx-background-color: #1069ba;
+    -fx-text-fill: #fff;
+}
+
+.logout-button:hover .image-view {
+    -fx-effect: innershadow(three-pass-box, rgba(255, 255, 255, 1), 50, 1.0, 0, 0);
 }
