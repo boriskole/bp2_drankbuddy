@@ -1,0 +1,73 @@
+/* Sidebar: */
+.sidebar {
+    -fx-background-color: #F0F6FC;
+    -fx-border-color: #D3D8DE;
+    -fx-border-width: 0 1 0 0; /* Alleen de rechter kant */
+}
+
+/* Header section: */
+.header-section {
+    -fx-border-color: #D3D8DE;
+    -fx-border-width: 0 0 1 0; /* Alleen de onderkant */
+}
+
+.logo-pane {
+    -fx-background-color: #1069ba;
+    -fx-max-width: 60;
+    -fx-max-height: 60;
+    -fx-background-radius: 10;
+}
+
+.header-title {
+    -fx-font-size: 20;
+    -fx-font-weight: bold;
+}
+
+.header-subtitle {
+    -fx-font-size: 14;
+    -fx-opacity: 0.7;
+}
+
+/* Nav links: */
+.nav-link {
+    -fx-font-size: 16;
+    -fx-padding: 10;
+    -fx-cursor: hand;
+}
+
+.nav-link:hover, .active-link {
+    -fx-background-color: #1069ba;
+    -fx-background-radius: 7;
+}
+
+.nav-link:hover .label, .active-link .label {
+    -fx-text-fill: #fff;
+}
+
+.nav-link:hover .image-view, .active-link .image-view {
+    -fx-effect: innershadow(three-pass-box, rgba(255, 255, 255, 1), 50, 1.0, 0, 0);
+}
+
+/* Logout section: */
+.logout-section {
+    -fx-border-color: #D3D8DE;
+    -fx-border-width: 1 0 0 0; /* Alleen de bovenste kant */
+}
+
+.logout-section .label {
+    -fx-font-size: 15;
+}
+
+.logout-section .image-view {
+    -fx-opacity: .6;
+}
+
+.logout-button {
+    -fx-cursor: hand;
+    -fx-padding: 10;
+    -fx-background-radius: 5;
+}
+
+.logout-button:hover {
+    -fx-background-color: #e7f1fb;
+}
