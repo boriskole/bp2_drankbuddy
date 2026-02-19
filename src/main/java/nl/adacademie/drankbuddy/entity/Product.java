@@ -4,6 +4,7 @@ import nl.adacademie.drankbuddy.entity.mutation.StockMutation;
 
 import java.util.ArrayList;
 import java.util.List;
+import java.util.Objects;
 
 /**
  * Een (drank-)product. Onderdeel van een {@link Category}.
@@ -14,12 +15,19 @@ public class Product {
     private String name;
     private Category category;
     private List<StockMutation> stockMutations;
+    private int currentStock;
 
     public Product() { }
 
     public Product(String name, Category category) {
         this.name = name;
         this.category = category;
+    }
+
+    public Product(String name, Category category, int currentStock) {
+        this.name = name;
+        this.category = category;
+        this.currentStock = currentStock;
     }
 
     public Product(int id, String name, Category category, List<StockMutation> stockMutations) {
@@ -67,6 +75,40 @@ public class Product {
         }
 
         stockMutations.add(stockMutation);
+    }
+
+    public int getCurrentStock() {
+        return currentStock;
+    }
+
+    public void setCurrentStock(int currentStock) {
+        this.currentStock = currentStock;
+    }
+
+    @Override
+    public String toString() {
+        return "Product{" +
+            "id=" + id +
+            ", name='" + name + '\'' +
+            ", category=" + category +
+            ", stockMutations=" + stockMutations +
+            ", currentStock=" + currentStock +
+            '}';
+    }
+
+    @Override
+    public boolean equals(Object other) {
+        if (other == null || getClass() != other.getClass())
+            return false;
+
+        Product product = (Product) other;
+
+        return id == product.id;
+    }
+
+    @Override
+    public int hashCode() {
+        return Objects.hashCode(id);
     }
 
 }
