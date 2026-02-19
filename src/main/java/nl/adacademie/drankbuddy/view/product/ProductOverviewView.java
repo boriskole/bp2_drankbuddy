@@ -1,4 +1,4 @@
-package nl.adacademie.drankbuddy.view.dashboard;
+package nl.adacademie.drankbuddy.view.product;
 
 import javafx.geometry.Insets;
 import javafx.geometry.Pos;
@@ -14,6 +14,7 @@ import nl.adacademie.drankbuddy.DrankBuddy;
 import nl.adacademie.drankbuddy.entity.Product;
 import nl.adacademie.drankbuddy.repository.dao.ProductDaoImpl;
 import nl.adacademie.drankbuddy.repository.interfaces.ProductDaoInterface;
+import nl.adacademie.drankbuddy.view.component.SidebarComponent;
 import nl.adacademie.drankbuddy.view.type.MenuPage;
 
 import java.util.List;

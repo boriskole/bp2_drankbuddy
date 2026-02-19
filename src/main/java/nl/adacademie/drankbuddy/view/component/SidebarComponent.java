@@ -1,4 +1,4 @@
-package nl.adacademie.drankbuddy.view.dashboard;
+package nl.adacademie.drankbuddy.view.component;
 
 import javafx.geometry.Insets;
 import javafx.geometry.Pos;
@@ -11,7 +11,10 @@ import javafx.scene.layout.Priority;
 import javafx.scene.layout.Region;
 import javafx.scene.layout.VBox;
 import nl.adacademie.drankbuddy.DrankBuddy;
+import nl.adacademie.drankbuddy.view.category.CategoryOverviewView;
+import nl.adacademie.drankbuddy.view.product.ProductOverviewView;
 import nl.adacademie.drankbuddy.view.security.LoginPageView;
+import nl.adacademie.drankbuddy.view.stockmutation.StockMutationsOverviewView;
 import nl.adacademie.drankbuddy.view.type.LoginPageStatus;
 import nl.adacademie.drankbuddy.view.type.MenuPage;
 

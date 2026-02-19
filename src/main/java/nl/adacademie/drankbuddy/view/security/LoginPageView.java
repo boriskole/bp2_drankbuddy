@@ -16,7 +16,7 @@ import nl.adacademie.drankbuddy.DrankBuddy;
 import nl.adacademie.drankbuddy.controller.LoginController;
 import nl.adacademie.drankbuddy.dto.LoginRequestDto;
 import nl.adacademie.drankbuddy.repository.dao.AccountDaoImpl;
-import nl.adacademie.drankbuddy.view.dashboard.ProductOverviewView;
+import nl.adacademie.drankbuddy.view.product.ProductOverviewView;
 import nl.adacademie.drankbuddy.view.type.LoginPageStatus;
 import nl.adacademie.drankbuddy.view.type.RegisterPageStatus;
 
