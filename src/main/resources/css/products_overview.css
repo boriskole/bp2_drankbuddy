@@ -1,0 +1,70 @@
+/* Heading: */
+.heading-title {
+    -fx-font-size: 30;
+    -fx-font-weight: bold;
+}
+
+.heading-subtitle {
+    -fx-font-size: 20;
+    -fx-opacity: 0.7;
+}
+
+/* Box styling: */
+.box {
+    -fx-background-color: #fff;
+    -fx-padding: 20;
+    -fx-border-color: rgba(0, 0, 0, 0.15);
+    -fx-border-radius: 10;
+    -fx-background-radius: 10;
+}
+
+/* Box heading styling: */
+.box-heading-title {
+    -fx-font-size: 14;
+    -fx-font-weight: bold;
+}
+
+.box-heading-subtitle {
+    -fx-opacity: .7;
+    -fx-font-size: 13;
+}
+
+/* Box add button styling: */
+.box-add-button {
+    -fx-background-color: #1069ba;
+    -fx-cursor: hand;
+    -fx-padding: 7;
+    -fx-background-radius: 5;
+}
+
+.box-add-button .label {
+    -fx-text-fill: #fff;
+}
+
+.box-add-button .image-view {
+    -fx-effect: innershadow(three-pass-box, rgba(255, 255, 255, 1), 50, 1.0, 0, 0);
+}
+
+.box-add-button:hover {
+    -fx-opacity: .8;
+}
+
+/* List styling: */
+.list-row {
+    -fx-padding: 10;
+    -fx-border-color: rgba(0, 0, 0, 0.08);
+    -fx-border-width: 0 0 1 0;
+}
+
+.list-row .label {
+    -fx-font-size: 14;
+}
+
+.list-heading-row .label {
+    -fx-font-weight: bold;
+}
+
+/* Scroll-pane styling: */
+.box .scroll-pane, .box .scroll-pane .viewport, .box .scroll-bar {
+    -fx-background-color: transparent;
+}
