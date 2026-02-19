@@ -15,12 +15,19 @@ public class Category {
     private String name;
     private Account owningAccount;
     private List<Product> products;
+    private int amountOfProducts;
 
     public Category() { }
 
     public Category(String name, Account owningAccount) {
         this.name = name;
         this.owningAccount = owningAccount;
+    }
+
+    public Category(String name, Account owningAccount, int amountOfProducts) {
+        this.name = name;
+        this.owningAccount = owningAccount;
+        this.amountOfProducts = amountOfProducts;
     }
 
     public Category(int id, String name, Account owningAccount, List<Product> products) {
@@ -70,12 +77,21 @@ public class Category {
         products.add(product);
     }
 
+    public int getAmountOfProducts() {
+        return amountOfProducts;
+    }
+
+    public void setAmountOfProducts(int amountOfProducts) {
+        this.amountOfProducts = amountOfProducts;
+    }
+
     @Override
     public String toString() {
         return "Category{" +
             "id=" + id +
             ", name='" + name + '\'' +
             ", owningAccount=" + owningAccount +
+            ", amountOfProducts=" + amountOfProducts +
             '}';
     }
 
