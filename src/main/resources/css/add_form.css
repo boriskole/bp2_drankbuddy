@@ -1,0 +1,39 @@
+/* Back button: */
+.back-button {
+    -fx-cursor: hand;
+}
+
+.back-button .label {
+    -fx-font-size: 15;
+}
+
+.back-button:hover .label {
+    -fx-underline: true;
+}
+
+/* Form styling: */
+.form-field .label {
+    -fx-font-size: 14;
+}
+
+.form-field .text-field {
+    -fx-font-size: 14;
+    -fx-prompt-text-fill: rgba(0, 0, 0, 0.4);
+    -fx-border-color: rgba(0, 0, 0, 0.2);
+    -fx-border-radius: 5;
+    -fx-background-radius: 5;
+    -fx-padding: 10;
+}
+
+.submit-button {
+    -fx-font-size: 14;
+    -fx-background-color: #1069ba;
+    -fx-text-fill: #fff;
+    -fx-padding: 10 20 10 20;
+    -fx-background-radius: 5;
+}
+
+.submit-button:hover {
+    -fx-background-color: #0d599e;
+    -fx-cursor: hand;
+}

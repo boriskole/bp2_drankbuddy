@@ -23,7 +23,7 @@ import java.util.stream.Stream;
 public class ProductOverviewView extends BorderPane {
 
     public ProductOverviewView() {
-        getStylesheets().add(getClass().getResource("/css/products_overview.css").toExternalForm()); // CSS toevoegen.
+        getStylesheets().add(getClass().getResource("/css/overview.css").toExternalForm()); // CSS toevoegen.
         setLeft(new SidebarComponent(MenuPage.PRODUCTS)); // Sidebar toevoegen.
 
         VBox root = new VBox(20);

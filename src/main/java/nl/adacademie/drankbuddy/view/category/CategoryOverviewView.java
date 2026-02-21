@@ -23,7 +23,7 @@ import java.util.stream.Stream;
 public class CategoryOverviewView extends BorderPane {
 
     public CategoryOverviewView() {
-        getStylesheets().add(getClass().getResource("/css/products_overview.css").toExternalForm()); // CSS toevoegen.
+        getStylesheets().add(getClass().getResource("/css/overview.css").toExternalForm()); // CSS toevoegen.
         setLeft(new SidebarComponent(MenuPage.CATEGORIES)); // Sidebar toevoegen.
 
         VBox root = new VBox(20);
@@ -101,6 +101,9 @@ public class CategoryOverviewView extends BorderPane {
         addButton.getChildren().add(imageView);
 
         addButton.getChildren().add(new Label("Categorie toevoegen"));
+
+        addButton.setOnMouseClicked(_ -> DrankBuddy.changeView(new AddCategoryView())); // Wanneer er op de knop wordt geklikt de add category view inladen.
+
         root.getChildren().add(addButton);
 
         return root;
