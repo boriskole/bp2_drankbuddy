@@ -42,7 +42,8 @@ FOREIGN KEY (category_id) REFERENCES category(id);
 
 ALTER TABLE stock_mutation
 ADD CONSTRAINT fk_stock_mutation_product
-FOREIGN KEY (product_id) REFERENCES product(id);
+FOREIGN KEY (product_id) REFERENCES product(id)
+ON DELETE CASCADE;
 
 -- INDEXES:
 CREATE INDEX idx_stock_mutation_date
