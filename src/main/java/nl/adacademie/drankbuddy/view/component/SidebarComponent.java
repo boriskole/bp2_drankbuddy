@@ -18,6 +18,7 @@ import nl.adacademie.drankbuddy.view.stockmutation.StockMutationsOverviewView;
 import nl.adacademie.drankbuddy.view.type.CategoryOverviewPageStatus;
 import nl.adacademie.drankbuddy.view.type.LoginPageStatus;
 import nl.adacademie.drankbuddy.view.type.MenuPage;
+import nl.adacademie.drankbuddy.view.type.ProductOverviewPageStatus;
 
 import java.util.function.Supplier;
 
@@ -93,7 +94,7 @@ public class SidebarComponent extends VBox {
                 "/media/product_icon.png",
                 "Producten",
                 activePage == MenuPage.PRODUCTS,
-                ProductOverviewView::new
+                () -> new ProductOverviewView(ProductOverviewPageStatus.NONE)
             )
         );
 

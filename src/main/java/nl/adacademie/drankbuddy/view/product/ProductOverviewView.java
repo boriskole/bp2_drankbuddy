@@ -15,26 +15,67 @@ import nl.adacademie.drankbuddy.entity.Product;
 import nl.adacademie.drankbuddy.repository.dao.ProductDaoImpl;
 import nl.adacademie.drankbuddy.repository.interfaces.ProductDaoInterface;
 import nl.adacademie.drankbuddy.view.component.SidebarComponent;
+import nl.adacademie.drankbuddy.view.type.AddProductPageStatus;
 import nl.adacademie.drankbuddy.view.type.MenuPage;
+import nl.adacademie.drankbuddy.view.type.ProductOverviewPageStatus;
 
 import java.util.List;
 import java.util.stream.Stream;
 
 public class ProductOverviewView extends BorderPane {
 
-    public ProductOverviewView() {
+    private final ProductOverviewPageStatus productOverviewPageStatus;
+
+    public ProductOverviewView(ProductOverviewPageStatus productOverviewPageStatus) {
+        this.productOverviewPageStatus = productOverviewPageStatus;
+
         getStylesheets().add(getClass().getResource("/css/overview.css").toExternalForm()); // CSS toevoegen.
         setLeft(new SidebarComponent(MenuPage.PRODUCTS)); // Sidebar toevoegen.
 
         VBox root = new VBox(20);
         root.setPadding(new Insets(20, 80, 20, 80));
 
-        root.getChildren().addAll(
-            createHeading(),
-            createBox()
-        );
+        root.getChildren().add(createHeading());
+
+        if (productOverviewPageStatus != ProductOverviewPageStatus.NONE) {
+            root.getChildren().add(createSuccessMessage(productOverviewPageStatus));
+        }
+
+        root.getChildren().add(createBox());
 
         setCenter(root);
+    }
+
+    private HBox createSuccessMessage(ProductOverviewPageStatus productOverviewPageStatus) {
+        HBox successBox = new HBox(10);
+        successBox.getStyleClass().add("success-box"); // Gebruik een success-class voor groene styling
+        successBox.setAlignment(Pos.CENTER_LEFT);
+        successBox.setPadding(new Insets(10));
+
+        // Icon maken
+        ImageView successIcon = new ImageView(getClass().getResource("/media/circle_check.png").toExternalForm());
+        successIcon.setFitWidth(25);
+        successIcon.setPreserveRatio(true);
+        successIcon.setSmooth(true);
+
+        // Label maken
+        String message = switch (productOverviewPageStatus) {
+            case ADD_SUCCESS -> "Gelukt! Uw product is succesvol toegevoegd.";
+            case EDIT_SUCCESS -> "Gelukt! Uw product is succesvol gewijzigd.";
+            case DELETE_SUCCESS -> "Gelukt! Uw product is succesvol verwijderd.";
+            default -> "Gelukt!";
+        };
+
+        Label successLabel = new Label(message);
+        successLabel.getStyleClass().add("success-text");
+
+        // Zorg dat de tekst netjes wrapt
+        successLabel.setWrapText(true);
+        successLabel.setMinWidth(0);
+        HBox.setHgrow(successLabel, Priority.ALWAYS);
+
+        successBox.getChildren().addAll(successIcon, successLabel);
+        return successBox;
     }
 
     private VBox createHeading() {
@@ -101,6 +142,9 @@ public class ProductOverviewView extends BorderPane {
         addButton.getChildren().add(imageView);
 
         addButton.getChildren().add(new Label("Product toevoegen"));
+
+        addButton.setOnMouseClicked(_ -> DrankBuddy.changeView(new AddProductView(AddProductPageStatus.NONE)));
+
         root.getChildren().add(addButton);
 
         return root;

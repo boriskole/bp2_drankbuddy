@@ -12,4 +12,6 @@ public interface ProductDaoInterface {
 
     List<Product> findAllByCategory(Category category);
 
+    void save(Product product);
+
 }

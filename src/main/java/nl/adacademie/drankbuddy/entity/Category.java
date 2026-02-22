@@ -87,12 +87,7 @@ public class Category {
 
     @Override
     public String toString() {
-        return "Category{" +
-            "id=" + id +
-            ", name='" + name + '\'' +
-            ", owningAccount=" + owningAccount +
-            ", amountOfProducts=" + amountOfProducts +
-            '}';
+        return name;
     }
 
     @Override

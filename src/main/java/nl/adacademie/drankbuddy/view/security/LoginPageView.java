@@ -18,6 +18,7 @@ import nl.adacademie.drankbuddy.dto.LoginRequestDto;
 import nl.adacademie.drankbuddy.repository.dao.AccountDaoImpl;
 import nl.adacademie.drankbuddy.view.product.ProductOverviewView;
 import nl.adacademie.drankbuddy.view.type.LoginPageStatus;
+import nl.adacademie.drankbuddy.view.type.ProductOverviewPageStatus;
 import nl.adacademie.drankbuddy.view.type.RegisterPageStatus;
 
 public class LoginPageView extends BorderPane {
@@ -164,7 +165,7 @@ public class LoginPageView extends BorderPane {
             switch (loginPageStatus) {
                 case EMPTY_FIELDS -> DrankBuddy.changeView(new LoginPageView(LoginPageStatus.EMPTY_FIELDS));
                 case INVALID_CREDENTIALS -> DrankBuddy.changeView(new LoginPageView(LoginPageStatus.INVALID_CREDENTIALS));
-                case LOGIN_SUCCESS -> DrankBuddy.changeView(new ProductOverviewView());
+                case LOGIN_SUCCESS -> DrankBuddy.changeView(new ProductOverviewView(ProductOverviewPageStatus.NONE));
             }
         });
 

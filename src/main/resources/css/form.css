@@ -16,13 +16,18 @@
     -fx-font-size: 14;
 }
 
-.form-field .text-field {
+.form-field .text-field, .form-field .combo-box {
     -fx-font-size: 14;
     -fx-prompt-text-fill: rgba(0, 0, 0, 0.4);
     -fx-border-color: rgba(0, 0, 0, 0.2);
     -fx-border-radius: 5;
     -fx-background-radius: 5;
+    -fx-background-color: #fff;
     -fx-padding: 10;
+}
+
+.form-field .combo-box {
+    -fx-padding: 5;
 }
 
 .submit-button {
