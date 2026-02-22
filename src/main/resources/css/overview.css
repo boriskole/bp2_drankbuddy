@@ -68,3 +68,18 @@
 .box .scroll-pane, .box .scroll-pane .viewport, .box .scroll-bar {
     -fx-background-color: transparent;
 }
+
+/* Success styling: */
+.success-box {
+    -fx-background-color: #dcfce7;
+    -fx-border-color: #22c55e;
+    -fx-border-width: 1;
+    -fx-border-radius: 8;
+    -fx-background-radius: 8;
+}
+
+.success-text {
+    -fx-text-fill: #166534;
+    -fx-font-family: "Geist";
+    -fx-font-size: 14px;
+}

@@ -9,4 +9,6 @@ public interface CategoryDaoInterface {
 
     List<Category> findAllByAccount(Account account);
 
+    void save(Category category);
+
 }

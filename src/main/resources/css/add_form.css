@@ -37,3 +37,17 @@
     -fx-background-color: #0d599e;
     -fx-cursor: hand;
 }
+
+
+/* Error styling: */
+.error-box {
+    -fx-background-color: #f8d7da;
+    -fx-border-color: #f5c6cb;
+    -fx-border-radius: 5px;
+    -fx-background-radius: 5px;
+}
+
+.error-text {
+    -fx-text-fill: #721c24;
+    -fx-font-size: 14px;
+}

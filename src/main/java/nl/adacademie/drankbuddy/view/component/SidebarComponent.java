@@ -15,8 +15,11 @@ import nl.adacademie.drankbuddy.view.category.CategoryOverviewView;
 import nl.adacademie.drankbuddy.view.product.ProductOverviewView;
 import nl.adacademie.drankbuddy.view.security.LoginPageView;
 import nl.adacademie.drankbuddy.view.stockmutation.StockMutationsOverviewView;
+import nl.adacademie.drankbuddy.view.type.CategoryOverviewPageStatus;
 import nl.adacademie.drankbuddy.view.type.LoginPageStatus;
 import nl.adacademie.drankbuddy.view.type.MenuPage;
+
+import java.util.function.Supplier;
 
 /**
  * Een losse component om de sidebar te maken.
@@ -90,7 +93,7 @@ public class SidebarComponent extends VBox {
                 "/media/product_icon.png",
                 "Producten",
                 activePage == MenuPage.PRODUCTS,
-                ProductOverviewView.class
+                ProductOverviewView::new
             )
         );
 
@@ -100,7 +103,7 @@ public class SidebarComponent extends VBox {
                 "/media/category_icon.png",
                 "Categorieën",
                 activePage == MenuPage.CATEGORIES,
-                CategoryOverviewView.class
+                () -> new CategoryOverviewView(CategoryOverviewPageStatus.NONE)
             )
         );
 
@@ -110,20 +113,20 @@ public class SidebarComponent extends VBox {
                 "/media/stock_mutation_icon.png",
                 "Voorraadmutaties",
                 activePage == MenuPage.STOCK_MUTATIONS,
-                StockMutationsOverviewView.class
+                StockMutationsOverviewView::new
             )
         );
 
         return root;
     }
 
-    private HBox createNavLink(String iconPath, String labelText, boolean isActive, Class<? extends BorderPane> navigationTarget) {
+    private HBox createNavLink(String iconPath, String labelText, boolean isActive, Supplier<BorderPane> navigationTarget) {
         HBox root = new HBox(10); // Root node maken
         root.getStyleClass().add("nav-link");
 
         root.setOnMouseClicked(_ -> { // Wanneer er geklikt wordt op de root node.
             try {
-                DrankBuddy.changeView(navigationTarget.getDeclaredConstructor().newInstance()); // Proberen een nieuwe instantie maken van de gegeven pagina.
+                DrankBuddy.changeView(navigationTarget.get()); // Proberen een nieuwe instantie maken van de gegeven pagina.
             } catch (Exception exception) {
                 throw new RuntimeException("Er is een fout opgetreden bij het aanmaken van een nieuwe dashboard view.", exception); // Kan in principe nooit gebeuren.
             }

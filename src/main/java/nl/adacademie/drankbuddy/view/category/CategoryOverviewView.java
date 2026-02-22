@@ -15,26 +15,64 @@ import nl.adacademie.drankbuddy.entity.Category;
 import nl.adacademie.drankbuddy.repository.dao.CategoryDaoImpl;
 import nl.adacademie.drankbuddy.repository.interfaces.CategoryDaoInterface;
 import nl.adacademie.drankbuddy.view.component.SidebarComponent;
+import nl.adacademie.drankbuddy.view.type.AddCategoryPageStatus;
+import nl.adacademie.drankbuddy.view.type.CategoryOverviewPageStatus;
 import nl.adacademie.drankbuddy.view.type.MenuPage;
 
 import java.util.List;
-import java.util.stream.Stream;
 
 public class CategoryOverviewView extends BorderPane {
 
-    public CategoryOverviewView() {
+    private final CategoryOverviewPageStatus categoryOverviewPageStatus;
+
+    public CategoryOverviewView(CategoryOverviewPageStatus categoryOverviewPageStatus) {
+        this.categoryOverviewPageStatus = categoryOverviewPageStatus;
+
         getStylesheets().add(getClass().getResource("/css/overview.css").toExternalForm()); // CSS toevoegen.
         setLeft(new SidebarComponent(MenuPage.CATEGORIES)); // Sidebar toevoegen.
 
         VBox root = new VBox(20);
         root.setPadding(new Insets(20, 80, 20, 80));
 
-        root.getChildren().addAll(
-            createHeading(),
-            createBox()
-        );
+        root.getChildren().add(createHeading());
+
+        if (categoryOverviewPageStatus != CategoryOverviewPageStatus.NONE) {
+            root.getChildren().add(createSuccessMessage(categoryOverviewPageStatus));
+        }
+
+        root.getChildren().add(createBox());
 
         setCenter(root);
+    }
+
+    private HBox createSuccessMessage(CategoryOverviewPageStatus categoryOverviewPageStatus) {
+        HBox successBox = new HBox(10);
+        successBox.getStyleClass().add("success-box"); // Gebruik een success-class voor groene styling
+        successBox.setAlignment(Pos.CENTER_LEFT);
+        successBox.setPadding(new Insets(10));
+
+        // Icon maken
+        ImageView successIcon = new ImageView(getClass().getResource("/media/circle_check.png").toExternalForm());
+        successIcon.setFitWidth(25);
+        successIcon.setPreserveRatio(true);
+        successIcon.setSmooth(true);
+
+        // Label maken
+        String message = switch (categoryOverviewPageStatus) {
+            case ADD_SUCCESS -> "Gelukt! Uw categorie is succesvol toegevoegd.";
+            default -> "Gelukt!";
+        };
+
+        Label successLabel = new Label(message);
+        successLabel.getStyleClass().add("success-text");
+
+        // Zorg dat de tekst netjes wrapt
+        successLabel.setWrapText(true);
+        successLabel.setMinWidth(0);
+        HBox.setHgrow(successLabel, Priority.ALWAYS);
+
+        successBox.getChildren().addAll(successIcon, successLabel);
+        return successBox;
     }
 
     private VBox createHeading() {
@@ -102,7 +140,7 @@ public class CategoryOverviewView extends BorderPane {
 
         addButton.getChildren().add(new Label("Categorie toevoegen"));
 
-        addButton.setOnMouseClicked(_ -> DrankBuddy.changeView(new AddCategoryView())); // Wanneer er op de knop wordt geklikt de add category view inladen.
+        addButton.setOnMouseClicked(_ -> DrankBuddy.changeView(new AddCategoryView(AddCategoryPageStatus.NONE))); // Wanneer er op de knop wordt geklikt de add category view inladen.
 
         root.getChildren().add(addButton);
 
@@ -115,13 +153,13 @@ public class CategoryOverviewView extends BorderPane {
 
         root.getChildren().add(createListHeading()); // De tabel headers toevoegen.
 
-        CategoryDaoInterface categoryDao = new CategoryDaoImpl();
-        List<Category> categories = categoryDao.findAllByAccount(DrankBuddy.loggedInAccount);
-        categories.forEach(category -> root.getChildren().add(createCategoryRow(category)));
+        CategoryDaoInterface categoryDao = new CategoryDaoImpl(); // Dao maken.
+        List<Category> categories = categoryDao.findAllByAccount(DrankBuddy.loggedInAccount); // Alle categorieen ophalen.
+        categories.forEach(category -> root.getChildren().add(createCategoryRow(category))); // Voor elke categorie een rij toevoegen.
 
-        if (categories.isEmpty()) {
-            HBox wrapper = new HBox();
-            wrapper.setAlignment(Pos.CENTER);
+        if (categories.isEmpty()) { // Als er geen categorieen zijn.
+            HBox wrapper = new HBox(); // Wrapper maken.
+            wrapper.setAlignment(Pos.CENTER); // Midden positioneren.
             wrapper.setPadding(new Insets(20));
             wrapper.getChildren().add(new Label("Er zijn nog geen categorieën toegevoegd."));
             root.getChildren().add(wrapper);
@@ -131,9 +169,10 @@ public class CategoryOverviewView extends BorderPane {
     }
 
     private HBox createListHeading() {
-        HBox root = new HBox();
+        HBox root = new HBox(); // Root node maken.
         root.getStyleClass().addAll("list-row", "list-heading-row");
 
+        // Labels maken.
         Label categoryId = new Label("ID");
         Label categoryName = new Label("Categorienaam");
         Label categoryAmountOfProducts = new Label("Aantal producten");
@@ -141,34 +180,42 @@ public class CategoryOverviewView extends BorderPane {
         Label categoryActions = new Label("Acties");
         categoryActions.setAlignment(Pos.CENTER_RIGHT);
 
-        Region spacer = new Region();
-        HBox.setHgrow(spacer, Priority.ALWAYS);
+        Region spacer = new Region(); // Een spacer maken om de laatste twee kolommen aan de rechterkant te stoppen.
+        HBox.setHgrow(spacer, Priority.ALWAYS); // Horizontaal laten groeien.
+
+        // De grootte van alle labels instellen.
+        categoryId.setPrefWidth(200);
+        categoryName.setPrefWidth(200);
+        categoryAmountOfProducts.setPrefWidth(200);
+        categoryActions.setPrefWidth(200);
 
         root.getChildren().addAll(categoryId, categoryName, spacer, categoryAmountOfProducts, categoryActions);
-        Stream.of(categoryId, categoryName, categoryAmountOfProducts, categoryActions).forEach(label -> label.setPrefWidth(200));
 
         return root;
     }
 
     private HBox createCategoryRow(Category category) {
-        HBox root = new HBox();
+        HBox root = new HBox(); // Root node maken.
         root.getStyleClass().addAll("list-row");
 
+        // Labels maken.
         Label categoryId = new Label(category.getId() + "");
         Label categoryName = new Label(category.getName());
         Label categoryAmountOfProducts = new Label(category.getAmountOfProducts() + " product(en)");
         categoryAmountOfProducts.setAlignment(Pos.CENTER_RIGHT);
         HBox categoryActions = new HBox(5);
 
-        ImageView editIcon = new ImageView(getClass().getResource("/media/edit_icon.png").toExternalForm());
-        editIcon.setFitWidth(20);
+        // Bewerken knop:
+        ImageView editIcon = new ImageView(getClass().getResource("/media/edit_icon.png").toExternalForm()); // Icoon inladen.
+        editIcon.setFitWidth(20); // Grootte instellen.
         editIcon.setPreserveRatio(true);
         BorderPane editButton = new BorderPane(editIcon);
         editButton.getStyleClass().add("list-action-button");
         categoryActions.getChildren().add(editButton);
 
-        ImageView deleteIcon = new ImageView(getClass().getResource("/media/delete_icon.png").toExternalForm());
-        deleteIcon.setFitWidth(20);
+        // Verwijderen knop:
+        ImageView deleteIcon = new ImageView(getClass().getResource("/media/delete_icon.png").toExternalForm()); // Icoon inladen.
+        deleteIcon.setFitWidth(20); // Grootte instellen.
         deleteIcon.setPreserveRatio(true);
         BorderPane deleteButton = new BorderPane(deleteIcon);
         deleteButton.getStyleClass().add("list-action-button");
@@ -176,13 +223,14 @@ public class CategoryOverviewView extends BorderPane {
 
         categoryActions.setAlignment(Pos.CENTER_RIGHT);
 
+        // De grootte van alle labels instellen.
         categoryId.setPrefWidth(200);
         categoryName.setPrefWidth(200);
         categoryAmountOfProducts.setPrefWidth(200);
         categoryActions.setPrefWidth(200);
 
-        Region spacer = new Region();
-        HBox.setHgrow(spacer, Priority.ALWAYS);
+        Region spacer = new Region(); // Een spacer maken om de laatste twee kolommen aan de rechterkant te stoppen.
+        HBox.setHgrow(spacer, Priority.ALWAYS); // Horizontaal laten groeien.
 
         root.getChildren().addAll(categoryId, categoryName, spacer, categoryAmountOfProducts, categoryActions);
 
