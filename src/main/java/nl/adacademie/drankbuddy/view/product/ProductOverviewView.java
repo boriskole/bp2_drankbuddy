@@ -28,10 +28,7 @@ import java.util.stream.Stream;
 
 public class ProductOverviewView extends BorderPane {
 
-    private final ProductOverviewPageStatus productOverviewPageStatus;
-
     public ProductOverviewView(ProductOverviewPageStatus productOverviewPageStatus) {
-        this.productOverviewPageStatus = productOverviewPageStatus;
 
         getStylesheets().add(getClass().getResource("/css/overview.css").toExternalForm()); // CSS toevoegen.
         setLeft(new SidebarComponent(MenuPage.PRODUCTS)); // Sidebar toevoegen.

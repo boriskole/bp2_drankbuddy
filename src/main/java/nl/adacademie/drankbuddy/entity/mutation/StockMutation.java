@@ -2,7 +2,7 @@ package nl.adacademie.drankbuddy.entity.mutation;
 
 import nl.adacademie.drankbuddy.entity.Product;
 
-import java.time.LocalDate;
+import java.time.LocalDateTime;
 import java.util.Objects;
 
 /**
@@ -12,7 +12,7 @@ public abstract class StockMutation {
 
     private int id;
     private int stockChange;
-    private LocalDate date;
+    private LocalDateTime date;
     private Product product;
 
     public StockMutation() { }
@@ -20,10 +20,10 @@ public abstract class StockMutation {
     public StockMutation(int stockChange, Product product) {
         this.stockChange = stockChange;
         this.product = product;
-        this.date = LocalDate.now();
+        this.date = LocalDateTime.now();
     }
 
-    public StockMutation(int id, int stockChange, LocalDate date, Product product) {
+    public StockMutation(int id, int stockChange, LocalDateTime date, Product product) {
         this.id = id;
         this.stockChange = stockChange;
         this.date = date;
@@ -46,11 +46,11 @@ public abstract class StockMutation {
         this.stockChange = stockChange;
     }
 
-    public LocalDate getDate() {
+    public LocalDateTime getDate() {
         return date;
     }
 
-    public void setDate(LocalDate date) {
+    public void setDate(LocalDateTime date) {
         this.date = date;
     }
 
@@ -60,6 +60,18 @@ public abstract class StockMutation {
 
     public void setProduct(Product product) {
         this.product = product;
+    }
+
+    public StockMutationType getType() {
+        if (this instanceof SaleMutation) {
+            return StockMutationType.SALE;
+        }
+
+        if (this instanceof DeliveryMutation) {
+            return StockMutationType.DELIVERY;
+        }
+
+        return StockMutationType.CORRECTION;
     }
 
     @Override

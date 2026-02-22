@@ -156,7 +156,7 @@ public class EditProductView extends BorderPane {
 
         root.getChildren().addAll(categoryField, nameField);
 
-        Button submitButton = new Button("Toevoegen"); // Submit knop maken.
+        Button submitButton = new Button("Opslaan"); // Submit knop maken.
         submitButton.getStyleClass().add("submit-button");
 
         submitButton.setOnMouseClicked(_ -> {

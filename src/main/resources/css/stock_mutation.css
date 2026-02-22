@@ -1,0 +1,19 @@
+.stock-change {
+    -fx-background-radius: 5;
+}
+
+.stock-change-negative {
+    -fx-background-color: #EAF0F5;
+}
+
+.stock-change-positive {
+    -fx-background-color: #0076D2;
+}
+
+.stock-change-positive .label {
+    -fx-text-fill: #fff;
+}
+
+.stock-change-positive .image-view {
+    -fx-effect: innershadow(three-pass-box, rgba(255, 255, 255, 1), 50, 1.0, 0, 0);
+}

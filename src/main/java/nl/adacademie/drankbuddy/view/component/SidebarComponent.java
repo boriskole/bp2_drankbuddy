@@ -114,7 +114,7 @@ public class SidebarComponent extends VBox {
                 "/media/stock_mutation_icon.png",
                 "Voorraadmutaties",
                 activePage == MenuPage.STOCK_MUTATIONS,
-                StockMutationsOverviewView::new
+                () -> new StockMutationsOverviewView(ProductOverviewPageStatus.NONE)
             )
         );
 
