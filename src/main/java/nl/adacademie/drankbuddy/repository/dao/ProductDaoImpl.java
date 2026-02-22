@@ -25,7 +25,7 @@ public class ProductDaoImpl implements ProductDaoInterface {
     public List<Product> findAllByAccount(Account account) {
         try {
             // Query maken.
-            String sql = "SELECT product.id AS product_id, product.name AS product_name, category.name AS category_name, COALESCE(SUM(stock_mutation.stock_change), 0) AS current_stock FROM product INNER JOIN category ON product.category_id = category.id LEFT JOIN stock_mutation on product.id = stock_mutation.product_id WHERE category.account_id = ? GROUP BY product.id, product.name, category.name";
+            String sql = "SELECT product.id AS product_id, product.name AS product_name, category.name AS category_name, category.id AS category_id, COALESCE(SUM(stock_mutation.stock_change), 0) AS current_stock FROM product INNER JOIN category ON product.category_id = category.id LEFT JOIN stock_mutation on product.id = stock_mutation.product_id WHERE category.account_id = ? GROUP BY product.id, product.name, category.name";
 
             // Statement maken.
             PreparedStatement statement = connection.prepareStatement(sql);
@@ -40,8 +40,10 @@ public class ProductDaoImpl implements ProductDaoInterface {
 
             while (resultSet.next()) { // Terwijl er nog producten zijn.
                 Category category = new Category(resultSet.getString("category_name"), account);
+                category.setId(resultSet.getInt("category_id"));
 
                 Product product = new Product(resultSet.getString("product_name"), category, resultSet.getInt("current_stock"));
+                product.setId(resultSet.getInt("product_id"));
 
                 products.add(product);
             }
@@ -91,6 +93,27 @@ public class ProductDaoImpl implements ProductDaoInterface {
             // Parameters instellen.
             statement.setString(1, product.getName());
             statement.setInt(2, product.getCategory().getId());
+
+            // Statement uitvoeren.
+            statement.executeUpdate();
+        } catch (SQLException exception) {
+            throw new IllegalStateException("Er ging iets mis tijdens een database operatie.", exception);
+        }
+    }
+
+    @Override
+    public void update(int id, String name, Category category) {
+        try {
+            // Query maken.
+            String sql = "UPDATE product SET name = ?, category_id = ? WHERE id = ?;";
+
+            // Statement maken.
+            PreparedStatement statement = connection.prepareStatement(sql);
+
+            // Parameters instellen.
+            statement.setString(1, name);
+            statement.setInt(2, category.getId());
+            statement.setInt(3, id);
 
             // Statement uitvoeren.
             statement.executeUpdate();

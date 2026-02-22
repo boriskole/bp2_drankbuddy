@@ -16,6 +16,7 @@ import nl.adacademie.drankbuddy.repository.dao.ProductDaoImpl;
 import nl.adacademie.drankbuddy.repository.interfaces.ProductDaoInterface;
 import nl.adacademie.drankbuddy.view.component.SidebarComponent;
 import nl.adacademie.drankbuddy.view.type.AddProductPageStatus;
+import nl.adacademie.drankbuddy.view.type.EditProductPageStatus;
 import nl.adacademie.drankbuddy.view.type.MenuPage;
 import nl.adacademie.drankbuddy.view.type.ProductOverviewPageStatus;
 
@@ -207,6 +208,10 @@ public class ProductOverviewView extends BorderPane {
         BorderPane editButton = new BorderPane(editIcon);
         editButton.getStyleClass().add("list-action-button");
         productActions.getChildren().add(editButton);
+
+        editButton.setOnMouseClicked(_ -> {
+            DrankBuddy.changeView(new EditProductView(EditProductPageStatus.NONE, product));
+        });
 
         ImageView deleteIcon = new ImageView(getClass().getResource("/media/delete_icon.png").toExternalForm());
         deleteIcon.setFitWidth(20);

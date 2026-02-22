@@ -27,6 +27,14 @@ public class TestProductDao implements ProductDaoInterface {
         ENTITIES.add(product);
     }
 
+    @Override
+    public void update(int id, String name, Category category) {
+        ENTITIES.stream().filter(entity -> entity.getId() == id).findFirst().ifPresent(entity -> {
+            entity.setName(name);
+            entity.setCategory(category);
+        });
+    }
+
     public static void addAll(List<Product> products) {
         ENTITIES.addAll(products);
     }

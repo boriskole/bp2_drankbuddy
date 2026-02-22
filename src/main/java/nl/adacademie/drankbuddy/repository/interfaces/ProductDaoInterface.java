@@ -14,4 +14,6 @@ public interface ProductDaoInterface {
 
     void save(Product product);
 
+    void update(int id, String name, Category category);
+
 }
