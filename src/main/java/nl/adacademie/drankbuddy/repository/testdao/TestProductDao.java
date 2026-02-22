@@ -35,6 +35,11 @@ public class TestProductDao implements ProductDaoInterface {
         });
     }
 
+    @Override
+    public void delete(Product product) {
+        ENTITIES.remove(product);
+    }
+
     public static void addAll(List<Product> products) {
         ENTITIES.addAll(products);
     }

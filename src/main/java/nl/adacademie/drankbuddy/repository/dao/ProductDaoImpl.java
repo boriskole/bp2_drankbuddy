@@ -122,4 +122,23 @@ public class ProductDaoImpl implements ProductDaoInterface {
         }
     }
 
+    @Override
+    public void delete(Product product) {
+        try {
+            // Query maken.
+            String sql = "DELETE FROM product WHERE id = ?;";
+
+            // Statement maken.
+            PreparedStatement statement = connection.prepareStatement(sql);
+
+            // Parameters instellen.
+            statement.setInt(1, product.getId());
+
+            // Statement uitvoeren.
+            statement.executeUpdate();
+        } catch (SQLException exception) {
+            throw new IllegalStateException("Er ging iets mis tijdens een database operatie.", exception);
+        }
+    }
+
 }

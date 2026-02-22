@@ -16,4 +16,6 @@ public interface ProductDaoInterface {
 
     void update(int id, String name, Category category);
 
+    void delete(Product product);
+
 }

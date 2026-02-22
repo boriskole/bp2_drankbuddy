@@ -2,6 +2,8 @@ package nl.adacademie.drankbuddy.view.product;
 
 import javafx.geometry.Insets;
 import javafx.geometry.Pos;
+import javafx.scene.Scene;
+import javafx.scene.control.Button;
 import javafx.scene.control.Label;
 import javafx.scene.control.ScrollPane;
 import javafx.scene.image.ImageView;
@@ -10,6 +12,7 @@ import javafx.scene.layout.HBox;
 import javafx.scene.layout.Priority;
 import javafx.scene.layout.Region;
 import javafx.scene.layout.VBox;
+import javafx.stage.Stage;
 import nl.adacademie.drankbuddy.DrankBuddy;
 import nl.adacademie.drankbuddy.entity.Product;
 import nl.adacademie.drankbuddy.repository.dao.ProductDaoImpl;
@@ -220,6 +223,8 @@ public class ProductOverviewView extends BorderPane {
         deleteButton.getStyleClass().add("list-action-button");
         productActions.getChildren().add(deleteButton);
 
+        deleteButton.setOnMouseClicked(_ -> openDeletionModal(product));
+
         productActions.setAlignment(Pos.CENTER_RIGHT);
 
         productName.setPrefWidth(200);
@@ -233,6 +238,47 @@ public class ProductOverviewView extends BorderPane {
         root.getChildren().addAll(productName, productCategory, spacer, productStock, productActions);
 
         return root;
+    }
+
+    private void openDeletionModal(Product product) {
+        Stage stage = new Stage(); // Nieuwe stage maken.
+        stage.centerOnScreen(); // Centreren op het scherm.
+
+        VBox root = new VBox(10); // Root node maken.
+        root.getStyleClass().add("modal");
+        root.getStylesheets().add(getClass().getResource("/css/overview.css").toExternalForm()); // CSS toevoegen.
+        root.setPadding(new Insets(15));
+
+        HBox heading = new HBox(); // Wrapper maken voor de heading.
+        heading.getStyleClass().add("modal-heading");
+        heading.getChildren().add(new Label("Product verwijderen")); // Heading toevoegen.
+
+        root.getChildren().add(heading);
+
+        Label description = new Label(String.format("Weet u zeker dat u de product \"%s\" wilt verwijderen?", product.getName())); // Extra vraag label maken.
+        description.getStyleClass().add("modal-description");
+
+        HBox buttons = new HBox(5); // Wrapper maken voor de knoppen.
+        buttons.setAlignment(Pos.CENTER_RIGHT); // Rechts-midden positioneren.
+        buttons.getStyleClass().add("modal-buttons");
+
+        Button cancelButton = new Button("Annuleren"); // Annuleren knop maken.
+        cancelButton.setOnAction(_ -> stage.close()); // Stage sluiten wanneer er op de knop wordt geklikt.
+        Button confirmButton = new Button("Verwijderen"); // Verwijderen knop maken.
+        confirmButton.getStyleClass().add("confirm-button");
+        confirmButton.setOnAction(_ -> { // Wanneer er op de knop wordt geklikt.
+            ProductDaoInterface productDao = new ProductDaoImpl();
+            productDao.delete(product); // Product verwijderen.
+            stage.close(); // Stage sluiten.
+            DrankBuddy.changeView(new ProductOverviewView(ProductOverviewPageStatus.DELETE_SUCCESS)); // Pagina herladen met success melding.
+        });
+
+        buttons.getChildren().addAll(cancelButton, confirmButton);
+
+        root.getChildren().addAll(description, buttons);
+
+        stage.setScene(new Scene(root, 500, -1)); // -1 zodat de hoogte automatisch berekend wordt.
+        stage.showAndWait();
     }
 
 }
