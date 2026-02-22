@@ -48,4 +48,30 @@ public class ProductDaoImpl implements ProductDaoInterface {
         }
     }
 
+    @Override
+    public List<Product> findAllByCategory(Category category) {
+        try {
+            String sql = "SELECT * FROM product WHERE category_id = ?;";
+
+            PreparedStatement statement = connection.prepareStatement(sql);
+            statement.setInt(1, category.getId());
+            ResultSet resultSet = statement.executeQuery();
+
+            List<Product> products = new ArrayList<>();
+
+            while (resultSet.next()) {
+                Product product = new Product(
+                    resultSet.getString("name"),
+                    category
+                );
+                products.add(product);
+            }
+
+            return products;
+
+        } catch (SQLException exception) {
+            throw new IllegalStateException("Er ging iets mis tijdens een database operatie.", exception);
+        }
+    }
+
 }

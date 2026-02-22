@@ -13,4 +13,6 @@ public interface CategoryDaoInterface {
 
     void update(int id, String name);
 
+    void delete(Category category);
+
 }

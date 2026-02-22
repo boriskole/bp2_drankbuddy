@@ -87,4 +87,23 @@ public class CategoryDaoImpl implements CategoryDaoInterface {
         }
     }
 
+    @Override
+    public void delete(Category category) {
+        try {
+            // Query maken.
+            String sql = "DELETE FROM category WHERE id = ?;";
+
+            // Statement maken.
+            PreparedStatement statement = connection.prepareStatement(sql);
+
+            // Parameters instellen.
+            statement.setInt(1, category.getId());
+
+            // Statement uitvoeren.
+            statement.executeUpdate();
+        } catch (SQLException exception) {
+            throw new IllegalStateException("Er ging iets mis tijdens een database operatie.", exception);
+        }
+    }
+
 }

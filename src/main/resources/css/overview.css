@@ -85,5 +85,52 @@
 .success-text {
     -fx-text-fill: #166534;
     -fx-font-family: "Geist";
-    -fx-font-size: 14px;
+    -fx-font-size: 14;
+}
+
+/* Modal styling: */
+.modal {
+    -fx-background-color: #fff;
+}
+
+.modal-heading .label {
+    -fx-font-size: 16;
+    -fx-font-weight: bold;
+}
+
+.modal-buttons .button {
+    -fx-font-size: 14;
+    -fx-padding: 5 20 5 20;
+    -fx-background-radius: 5;
+    -fx-cursor: hand;
+    -fx-background-color: transparent;
+    -fx-border-color: gray;
+    -fx-border-radius: 5;
+}
+
+.modal-buttons .button:hover {
+    -fx-opacity: .8;
+}
+
+.confirm-button {
+    -fx-background-color: #dc3545 !important;
+    -fx-border-width: 0;
+    -fx-text-fill: #fff;
+}
+
+.confirm-button:disabled {
+    -fx-cursor: wait;
+}
+
+/* Modal alert: */
+.warning-alert {
+    -fx-border-color: #dc3545;
+    -fx-border-width: 1;
+    -fx-border-radius: 5;
+    -fx-padding: 10;
+}
+
+.warning-alert .label {
+    -fx-text-fill: #dc3545;
+    -fx-font-size: 14;
 }

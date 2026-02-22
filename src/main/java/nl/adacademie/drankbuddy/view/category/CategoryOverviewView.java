@@ -2,6 +2,8 @@ package nl.adacademie.drankbuddy.view.category;
 
 import javafx.geometry.Insets;
 import javafx.geometry.Pos;
+import javafx.scene.Scene;
+import javafx.scene.control.Button;
 import javafx.scene.control.Label;
 import javafx.scene.control.ScrollPane;
 import javafx.scene.image.ImageView;
@@ -10,10 +12,14 @@ import javafx.scene.layout.HBox;
 import javafx.scene.layout.Priority;
 import javafx.scene.layout.Region;
 import javafx.scene.layout.VBox;
+import javafx.stage.Stage;
 import nl.adacademie.drankbuddy.DrankBuddy;
 import nl.adacademie.drankbuddy.entity.Category;
+import nl.adacademie.drankbuddy.entity.Product;
 import nl.adacademie.drankbuddy.repository.dao.CategoryDaoImpl;
+import nl.adacademie.drankbuddy.repository.dao.ProductDaoImpl;
 import nl.adacademie.drankbuddy.repository.interfaces.CategoryDaoInterface;
+import nl.adacademie.drankbuddy.repository.interfaces.ProductDaoInterface;
 import nl.adacademie.drankbuddy.view.component.SidebarComponent;
 import nl.adacademie.drankbuddy.view.type.AddCategoryPageStatus;
 import nl.adacademie.drankbuddy.view.type.CategoryOverviewPageStatus;
@@ -62,6 +68,7 @@ public class CategoryOverviewView extends BorderPane {
         String message = switch (categoryOverviewPageStatus) {
             case ADD_SUCCESS -> "Gelukt! Uw categorie is succesvol toegevoegd.";
             case EDIT_SUCCESS -> "Gelukt! Uw categorie is succesvol gewijzigd.";
+            case DELETE_SUCCESS -> "Gelukt! Uw categorie is succesvol verwijderd.";
             default -> "Gelukt!";
         };
 
@@ -227,6 +234,8 @@ public class CategoryOverviewView extends BorderPane {
         deleteButton.getStyleClass().add("list-action-button");
         categoryActions.getChildren().add(deleteButton);
 
+        deleteButton.setOnMouseClicked(_ -> openDeletionModal(category));
+
         categoryActions.setAlignment(Pos.CENTER_RIGHT);
 
         // De grootte van alle labels instellen.
@@ -241,6 +250,70 @@ public class CategoryOverviewView extends BorderPane {
         root.getChildren().addAll(categoryId, categoryName, spacer, categoryAmountOfProducts, categoryActions);
 
         return root;
+    }
+
+    private void openDeletionModal(Category category) {
+        Stage stage = new Stage(); // Nieuwe stage maken.
+        stage.centerOnScreen(); // Centreren op het scherm.
+
+        // Kijken of er nog producten zijn in de categorie.
+        ProductDaoInterface productDao = new ProductDaoImpl();
+        List<Product> products = productDao.findAllByCategory(category);
+        boolean hasProducts = !products.isEmpty();
+
+        VBox root = new VBox(10); // Root node maken.
+        root.getStyleClass().add("modal");
+        root.getStylesheets().add(getClass().getResource("/css/overview.css").toExternalForm()); // CSS toevoegen.
+        root.setPadding(new Insets(15));
+
+        HBox heading = new HBox(); // Wrapper maken voor de heading.
+        heading.getStyleClass().add("modal-heading");
+        heading.getChildren().add(new Label("Categorie verwijderen")); // Heading toevoegen.
+
+        root.getChildren().add(heading);
+
+        Label description = new Label(String.format("Weet u zeker dat u de categorie \"%s\" wilt verwijderen?", category.getName())); // Extra vraag label maken.
+        description.getStyleClass().add("modal-description");
+
+        if (hasProducts) { // Als er nog producten zijn in de categorie.
+            HBox warning = new HBox(10);
+            warning.setAlignment(Pos.CENTER_LEFT); // Links-midden positioneren.
+            warning.getStyleClass().add("warning-alert");
+
+            ImageView warningIcon = new ImageView(getClass().getResource("/media/circle_alert.png").toExternalForm()); // Icoon inladen.
+            warningIcon.setFitWidth(25); // Grootte instellen.
+            warningIcon.setPreserveRatio(true);
+
+            Label warningText = new Label(String.format("Deze categorie bevat nog %s product(en) en kan niet verwijderd worden.", products.size())); // Warning tekst maken.
+            warningText.getStyleClass().add("warning-text");
+
+            warning.getChildren().addAll(warningIcon, warningText);
+
+            root.getChildren().add(warning);
+        }
+
+        HBox buttons = new HBox(5); // Wrapper maken voor de knoppen.
+        buttons.setAlignment(Pos.CENTER_RIGHT); // Rechts-midden positioneren.
+        buttons.getStyleClass().add("modal-buttons");
+
+        Button cancelButton = new Button("Annuleren"); // Annuleren knop maken.
+        cancelButton.setOnAction(_ -> stage.close()); // Stage sluiten wanneer er op de knop wordt geklikt.
+        Button confirmButton = new Button("Verwijderen"); // Verwijderen knop maken.
+        confirmButton.getStyleClass().add("confirm-button");
+        confirmButton.setDisable(hasProducts); // Knop op disabled zetten wanneer er nog producten in de categorie zijn.
+        confirmButton.setOnAction(_ -> { // Wanneer er op de knop wordt geklikt.
+            CategoryDaoInterface categoryDao = new CategoryDaoImpl();
+            categoryDao.delete(category); // Categorie verwijderen.
+            stage.close(); // Stage sluiten.
+            DrankBuddy.changeView(new CategoryOverviewView(CategoryOverviewPageStatus.DELETE_SUCCESS)); // Pagina herladen met success melding.
+        });
+
+        buttons.getChildren().addAll(cancelButton, confirmButton);
+
+        root.getChildren().addAll(description, buttons);
+
+        stage.setScene(new Scene(root, 500, -1)); // -1 zodat de hoogte automatisch berekend wordt.
+        stage.showAndWait();
     }
 
 }
