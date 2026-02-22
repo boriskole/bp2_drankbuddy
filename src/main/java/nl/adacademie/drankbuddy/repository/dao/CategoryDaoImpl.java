@@ -67,4 +67,24 @@ public class CategoryDaoImpl implements CategoryDaoInterface {
          }
     }
 
+    @Override
+    public void update(int id, String name) {
+        try {
+            // Query maken.
+            String sql = "UPDATE category SET name = ? WHERE id = ?;";
+
+            // Statement maken.
+            PreparedStatement statement = connection.prepareStatement(sql);
+
+            // Parameters instellen.
+            statement.setString(1, name);
+            statement.setInt(2, id);
+
+            // Statement uitvoeren.
+            statement.executeUpdate();
+        } catch (SQLException exception) {
+            throw new IllegalStateException("Er ging iets mis tijdens een database operatie.", exception);
+        }
+    }
+
 }

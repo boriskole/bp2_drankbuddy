@@ -11,4 +11,6 @@ public interface CategoryDaoInterface {
 
     void save(Category category);
 
+    void update(int id, String name);
+
 }

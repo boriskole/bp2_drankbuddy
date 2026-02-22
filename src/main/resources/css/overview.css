@@ -64,6 +64,10 @@
     -fx-font-weight: bold;
 }
 
+.list-action-button {
+    -fx-cursor: hand;
+}
+
 /* Scroll-pane styling: */
 .box .scroll-pane, .box .scroll-pane .viewport, .box .scroll-bar {
     -fx-background-color: transparent;

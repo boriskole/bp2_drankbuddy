@@ -17,6 +17,7 @@ import nl.adacademie.drankbuddy.repository.interfaces.CategoryDaoInterface;
 import nl.adacademie.drankbuddy.view.component.SidebarComponent;
 import nl.adacademie.drankbuddy.view.type.AddCategoryPageStatus;
 import nl.adacademie.drankbuddy.view.type.CategoryOverviewPageStatus;
+import nl.adacademie.drankbuddy.view.type.EditCategoryPageStatus;
 import nl.adacademie.drankbuddy.view.type.MenuPage;
 
 import java.util.List;
@@ -60,6 +61,7 @@ public class CategoryOverviewView extends BorderPane {
         // Label maken
         String message = switch (categoryOverviewPageStatus) {
             case ADD_SUCCESS -> "Gelukt! Uw categorie is succesvol toegevoegd.";
+            case EDIT_SUCCESS -> "Gelukt! Uw categorie is succesvol gewijzigd.";
             default -> "Gelukt!";
         };
 
@@ -212,6 +214,10 @@ public class CategoryOverviewView extends BorderPane {
         BorderPane editButton = new BorderPane(editIcon);
         editButton.getStyleClass().add("list-action-button");
         categoryActions.getChildren().add(editButton);
+
+        editButton.setOnMouseClicked(_ -> {
+            DrankBuddy.changeView(new EditCategoryView(EditCategoryPageStatus.NONE, category));
+        });
 
         // Verwijderen knop:
         ImageView deleteIcon = new ImageView(getClass().getResource("/media/delete_icon.png").toExternalForm()); // Icoon inladen.

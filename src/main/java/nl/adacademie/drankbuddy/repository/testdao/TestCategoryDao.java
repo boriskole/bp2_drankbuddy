@@ -21,6 +21,11 @@ public class TestCategoryDao implements CategoryDaoInterface {
         ENTITIES.add(category);
     }
 
+    @Override
+    public void update(int id, String name) {
+        ENTITIES.stream().filter(entity -> entity.getId() == id).findFirst().ifPresent(entity -> entity.setName(name));
+    }
+
     public static void addAll(List<Category> accounts) {
         ENTITIES.addAll(accounts);
     }

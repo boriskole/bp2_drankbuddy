@@ -10,20 +10,23 @@ import javafx.scene.layout.BorderPane;
 import javafx.scene.layout.HBox;
 import javafx.scene.layout.VBox;
 import nl.adacademie.drankbuddy.DrankBuddy;
-import nl.adacademie.drankbuddy.controller.category.AddCategoryController;
-import nl.adacademie.drankbuddy.dto.AddCategoryRequestDto;
+import nl.adacademie.drankbuddy.controller.category.EditCategoryController;
+import nl.adacademie.drankbuddy.dto.EditCategoryRequestDto;
+import nl.adacademie.drankbuddy.entity.Category;
 import nl.adacademie.drankbuddy.repository.dao.CategoryDaoImpl;
 import nl.adacademie.drankbuddy.view.component.SidebarComponent;
-import nl.adacademie.drankbuddy.view.type.AddCategoryPageStatus;
 import nl.adacademie.drankbuddy.view.type.CategoryOverviewPageStatus;
+import nl.adacademie.drankbuddy.view.type.EditCategoryPageStatus;
 import nl.adacademie.drankbuddy.view.type.MenuPage;
 
-public class AddCategoryView extends BorderPane {
+public class EditCategoryView extends BorderPane {
 
-    private final AddCategoryPageStatus addCategoryPageStatus;
+    private final EditCategoryPageStatus addCategoryPageStatus;
+    private final Category category;
 
-    public AddCategoryView(AddCategoryPageStatus addCategoryPageStatus) {
+    public EditCategoryView(EditCategoryPageStatus addCategoryPageStatus, Category category) {
         this.addCategoryPageStatus = addCategoryPageStatus;
+        this.category = category;
 
         getStylesheets().add(getClass().getResource("/css/overview.css").toExternalForm()); // CSS toevoegen.
         getStylesheets().add(getClass().getResource("/css/form.css").toExternalForm()); // CSS toevoegen.
@@ -66,11 +69,11 @@ public class AddCategoryView extends BorderPane {
         VBox root = new VBox(5); // Root node maken.
 
         // Categorieen titel
-        Label title = new Label("Categorie toevoegen");
+        Label title = new Label("Categorie bewerken");
         title.getStyleClass().add("heading-title");
 
         // Categorieen subtitel
-        Label subtitle = new Label("Voer een naam in voor de nieuwe productcategorie");
+        Label subtitle = new Label("Wijzig de gegevens de categorie");
         subtitle.getStyleClass().add("heading-subtitle");
 
         root.getChildren().addAll(title, subtitle); // Alle onderdelen toevoegen aan de root node.
@@ -86,7 +89,7 @@ public class AddCategoryView extends BorderPane {
         root.getChildren().add(createBoxHeadingSection());
 
         // Alleen als de status empty fields is of too long name.
-        if (addCategoryPageStatus == AddCategoryPageStatus.EMPTY_FIELDS || addCategoryPageStatus == AddCategoryPageStatus.TOO_LONG_NAME) {
+        if (addCategoryPageStatus == EditCategoryPageStatus.EMPTY_FIELDS || addCategoryPageStatus == EditCategoryPageStatus.TOO_LONG_NAME) {
             root.getChildren().add(createError(addCategoryPageStatus)); // Error melding maken.
         }
 
@@ -99,11 +102,11 @@ public class AddCategoryView extends BorderPane {
         VBox root = new VBox(); // Root node maken.
 
         // Eerste titel maken.
-        Label headingTitle = new Label("Nieuwe categorie");
+        Label headingTitle = new Label("Gegevens wijzigen");
         headingTitle.getStyleClass().add("box-heading-title");
 
         // Tweede titel maken.
-        Label headingSubtitle = new Label("Vul onderstaand formulier in om een categorie aan te maken");
+        Label headingSubtitle = new Label(String.format("U bewerkt categorie '%s'", category.getName()));
         headingSubtitle.getStyleClass().add("box-heading-subtitle");
 
         // Titels toevoegen aan de root node.
@@ -125,28 +128,31 @@ public class AddCategoryView extends BorderPane {
         nameField.getChildren().add(nameLabel);
 
         TextField nameFieldInput = new TextField(); // Invulveld maken.
-        nameFieldInput.setPromptText("Bijv. Spirits, Bier, Wijn..."); // Placeholder tekst instellen.
+        nameFieldInput.setText(category.getName()); // Invulveld invullen met de naam van de categorie.
         nameField.getChildren().add(nameFieldInput);
 
         root.getChildren().add(nameField);
 
-        Button submitButton = new Button("Toevoegen"); // Submit knop maken.
+        Button submitButton = new Button("Opslaan"); // Submit knop maken.
         submitButton.getStyleClass().add("submit-button");
 
         submitButton.setOnMouseClicked(_ -> {
             // Dto maken met de form data.
-            AddCategoryRequestDto dto = new AddCategoryRequestDto(nameFieldInput.getText());
+            EditCategoryRequestDto dto = new EditCategoryRequestDto(
+                category.getId(),
+                nameFieldInput.getText()
+            );
 
             // Instantie maken van de controller met daarin de echte database dao versie.
-            AddCategoryController addCategoryController = new AddCategoryController(new CategoryDaoImpl());
+            EditCategoryController editCategoryController = new EditCategoryController(new CategoryDaoImpl());
 
-            AddCategoryPageStatus result = addCategoryController.addCategory(dto); // Controller uitvoeren.
+            EditCategoryPageStatus result = editCategoryController.editCategory(dto); // Controller uitvoeren.
 
             // Resultaat verwerken.
             switch (result) {
-                case EMPTY_FIELDS -> DrankBuddy.changeView(new AddCategoryView(AddCategoryPageStatus.EMPTY_FIELDS));
-                case TOO_LONG_NAME -> DrankBuddy.changeView(new AddCategoryView(AddCategoryPageStatus.TOO_LONG_NAME));
-                case SUCCESS -> DrankBuddy.changeView(new CategoryOverviewView(CategoryOverviewPageStatus.ADD_SUCCESS));
+                case EMPTY_FIELDS -> DrankBuddy.changeView(new EditCategoryView(EditCategoryPageStatus.EMPTY_FIELDS, category));
+                case TOO_LONG_NAME -> DrankBuddy.changeView(new EditCategoryView(EditCategoryPageStatus.TOO_LONG_NAME, category));
+                case SUCCESS -> DrankBuddy.changeView(new CategoryOverviewView(CategoryOverviewPageStatus.EDIT_SUCCESS));
             }
         });
 
@@ -155,7 +161,7 @@ public class AddCategoryView extends BorderPane {
         return root;
     }
 
-    private HBox createError(AddCategoryPageStatus addCategoryPageStatus) {
+    private HBox createError(EditCategoryPageStatus editCategoryPageStatus) {
         HBox errorBox = new HBox(10); // Root node maken.
         errorBox.getStyleClass().add("error-box"); // CSS-class toevoegen.
         errorBox.setAlignment(Pos.CENTER_LEFT); // Links-midden positioneren.
@@ -168,7 +174,7 @@ public class AddCategoryView extends BorderPane {
         errorIcon.setSmooth(true);
 
         // De error message bepalen op basis van de error enum.
-        String message = switch (addCategoryPageStatus) {
+        String message = switch (editCategoryPageStatus) {
             case EMPTY_FIELDS -> "Vul alstublieft alle velden in.";
             case TOO_LONG_NAME -> "De naam is te lang. Maximaal 50 karakters zijn toegestaan.";
             default -> "Er is iets misgegaan.";
