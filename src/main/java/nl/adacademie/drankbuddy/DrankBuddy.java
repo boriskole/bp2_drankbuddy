@@ -5,8 +5,8 @@ import javafx.scene.Scene;
 import javafx.scene.layout.Pane;
 import javafx.stage.Stage;
 import nl.adacademie.drankbuddy.entity.Account;
-import nl.adacademie.drankbuddy.repository.dao.AccountDaoImpl;
-import nl.adacademie.drankbuddy.view.dashboard.ProductOverviewView;
+import nl.adacademie.drankbuddy.view.security.LoginPageView;
+import nl.adacademie.drankbuddy.view.type.LoginPageStatus;
 
 public class DrankBuddy extends Application {
 
@@ -22,13 +22,14 @@ public class DrankBuddy extends Application {
     public void start(Stage stage) {
         DrankBuddy.stage = stage;
 
-        loggedInAccount = new AccountDaoImpl().findByUsername("boriskole").get();
-
-//        Scene scene = new Scene(new LoginPageView(LoginPageStatus.NONE), APPLICATION_WINDOW_SIZE[0], APPLICATION_WINDOW_SIZE[1]);
-        Scene scene = new Scene(new ProductOverviewView(), APPLICATION_WINDOW_SIZE[0], APPLICATION_WINDOW_SIZE[1]);
+        Scene scene = new Scene(new LoginPageView(LoginPageStatus.NONE), APPLICATION_WINDOW_SIZE[0], APPLICATION_WINDOW_SIZE[1]);
         stage.setTitle("DrankBuddy V1");
         stage.setScene(scene);
         stage.show();
+    }
+
+    static void main(String[] args) {
+        launch(args);
     }
 
 }
