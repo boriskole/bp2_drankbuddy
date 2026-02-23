@@ -15,10 +15,9 @@ import nl.adacademie.drankbuddy.entity.mutation.StockMutation;
 import nl.adacademie.drankbuddy.repository.dao.StockMutationDaoImpl;
 import nl.adacademie.drankbuddy.repository.interfaces.StockMutationDaoInterface;
 import nl.adacademie.drankbuddy.view.component.SidebarComponent;
-import nl.adacademie.drankbuddy.view.product.AddProductView;
-import nl.adacademie.drankbuddy.view.type.AddProductPageStatus;
+import nl.adacademie.drankbuddy.view.type.AddStockMutationPageStatus;
 import nl.adacademie.drankbuddy.view.type.MenuPage;
-import nl.adacademie.drankbuddy.view.type.ProductOverviewPageStatus;
+import nl.adacademie.drankbuddy.view.type.StockMutationsOverviewPageStatus;
 
 import java.time.format.DateTimeFormatter;
 import java.util.List;
@@ -26,10 +25,10 @@ import java.util.stream.Stream;
 
 public class StockMutationsOverviewView extends BorderPane {
 
-    private final ProductOverviewPageStatus productOverviewPageStatus;
+    private final StockMutationsOverviewPageStatus stockMutationsOverviewPageStatus;
 
-    public StockMutationsOverviewView(ProductOverviewPageStatus productOverviewPageStatus) {
-        this.productOverviewPageStatus = productOverviewPageStatus;
+    public StockMutationsOverviewView(StockMutationsOverviewPageStatus stockMutationsOverviewPageStatus) {
+        this.stockMutationsOverviewPageStatus = stockMutationsOverviewPageStatus;
 
         getStylesheets().add(getClass().getResource("/css/overview.css").toExternalForm()); // CSS toevoegen.
         getStylesheets().add(getClass().getResource("/css/stock_mutation.css").toExternalForm()); // CSS toevoegen.
@@ -40,7 +39,7 @@ public class StockMutationsOverviewView extends BorderPane {
 
         root.getChildren().add(createHeading());
 
-        if (productOverviewPageStatus != ProductOverviewPageStatus.NONE) {
+        if (stockMutationsOverviewPageStatus != StockMutationsOverviewPageStatus.NONE) {
             root.getChildren().add(createSuccessMessage());
         }
 
@@ -141,7 +140,7 @@ public class StockMutationsOverviewView extends BorderPane {
 
         addButton.getChildren().add(new Label("Mutatie toevoegen"));
 
-        addButton.setOnMouseClicked(_ -> DrankBuddy.changeView(new AddProductView(AddProductPageStatus.NONE))); // TODO: Implement this
+        addButton.setOnMouseClicked(_ -> DrankBuddy.changeView(new AddStockMutationView(AddStockMutationPageStatus.NONE)));
 
         root.getChildren().add(addButton);
 

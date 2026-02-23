@@ -2,9 +2,9 @@ package nl.adacademie.drankbuddy.entity.mutation;
 
 public enum StockMutationType {
 
-    CORRECTION("Correctie"),
     SALE("Verkoop"),
-    DELIVERY("Levering");
+    DELIVERY("Levering"),
+    CORRECTION("Correctie");
 
     private final String title;
 
@@ -13,6 +13,11 @@ public enum StockMutationType {
     }
 
     public String getTitle() {
+        return title;
+    }
+
+    @Override
+    public String toString() {
         return title;
     }
 

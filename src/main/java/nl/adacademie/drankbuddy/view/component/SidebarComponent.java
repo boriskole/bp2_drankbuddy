@@ -19,6 +19,7 @@ import nl.adacademie.drankbuddy.view.type.CategoryOverviewPageStatus;
 import nl.adacademie.drankbuddy.view.type.LoginPageStatus;
 import nl.adacademie.drankbuddy.view.type.MenuPage;
 import nl.adacademie.drankbuddy.view.type.ProductOverviewPageStatus;
+import nl.adacademie.drankbuddy.view.type.StockMutationsOverviewPageStatus;
 
 import java.util.function.Supplier;
 
@@ -114,7 +115,7 @@ public class SidebarComponent extends VBox {
                 "/media/stock_mutation_icon.png",
                 "Voorraadmutaties",
                 activePage == MenuPage.STOCK_MUTATIONS,
-                () -> new StockMutationsOverviewView(ProductOverviewPageStatus.NONE)
+                () -> new StockMutationsOverviewView(StockMutationsOverviewPageStatus.NONE)
             )
         );
 

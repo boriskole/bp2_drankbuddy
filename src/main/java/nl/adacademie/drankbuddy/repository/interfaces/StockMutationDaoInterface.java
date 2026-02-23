@@ -9,4 +9,6 @@ public interface StockMutationDaoInterface {
 
     List<StockMutation> findAllByAccount(Account account);
 
+    void save(StockMutation stockMutation);
+
 }

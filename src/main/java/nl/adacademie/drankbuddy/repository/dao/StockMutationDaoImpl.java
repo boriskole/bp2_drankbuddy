@@ -83,4 +83,26 @@ public class StockMutationDaoImpl implements StockMutationDaoInterface {
         }
     }
 
+    @Override
+    public void save(StockMutation stockMutation) {
+        try {
+            // Query maken.
+            String sql = "INSERT INTO stock_mutation (mutation_type, stock_change, product_id) VALUES (?, ?, ?);";
+
+            // Statement maken.
+            PreparedStatement statement = connection.prepareStatement(sql);
+
+            // Parameters instellen.
+            statement.setString(1, stockMutation.getType().name());
+            statement.setInt(2, stockMutation.getStockChange());
+            statement.setInt(3, stockMutation.getProduct().getId());
+
+            // Statement uitvoeren.
+            statement.executeUpdate();
+
+        } catch (SQLException exception) {
+            throw new IllegalStateException("Er ging iets mis tijdens een database operatie.", exception);
+        }
+    }
+
 }
